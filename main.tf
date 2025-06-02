@@ -130,8 +130,6 @@ module "ec2_instances" {
   
   # Ensure all dependencies are created first
   depends_on = [
-    module.vpc,
-    module.security_groups,
     module.iam_roles,
     aws_key_pair.main
   ]
@@ -140,11 +138,7 @@ module "ec2_instances" {
 # Add cleanup dependency resource to ensure proper destroy order
 resource "null_resource" "destroy_order" {
   depends_on = [
-    module.ec2_instances,
-    module.transit_gateway,
-    module.security_groups,
-    module.vpc,
-    module.ipam
+    module.ec2_instances
   ]
   
   provisioner "local-exec" {
