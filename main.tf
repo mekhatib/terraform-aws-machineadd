@@ -31,6 +31,15 @@ data "aws_ami" "amazon_linux" {
   owners = ["amazon"]
 }
 
+# Data sources to fetch instance details including public IPs
+data "aws_instance" "instances" {
+  for_each = toset(module.ec2_instances.instance_ids)
+  
+  instance_id = each.value
+  
+  depends_on = [module.ec2_instances]
+}
+
 # Create key pair
 resource "tls_private_key" "main" {
   algorithm = "RSA"
