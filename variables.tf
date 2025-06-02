@@ -1,30 +1,89 @@
-output "instance_ids" {
-  description = "IDs of the EC2 instances"
-  value       = module.ec2_instances.instance_ids
+# Infrastructure outputs as inputs
+variable "vpc_id" {
+  description = "VPC ID from infrastructure module"
+  type        = string
 }
 
-output "instance_private_ips" {
-  description = "Private IPs of the EC2 instances"
-  value       = module.ec2_instances.private_ips
+variable "vpc_cidr_block" {
+  description = "VPC CIDR block from infrastructure module"
+  type        = string
 }
 
-output "instance_elastic_ips" {
-  description = "Elastic IPs of the EC2 instances (if assigned)"
-  value       = module.ec2_instances.elastic_ips
+variable "private_subnet_ids" {
+  description = "Private subnet IDs from infrastructure module"
+  type        = list(string)
 }
 
-output "instance_names" {
-  description = "Names of the EC2 instances"
-  value       = module.ec2_instances.instance_names
+variable "public_subnet_ids" {
+  description = "Public subnet IDs from infrastructure module"
+  type        = list(string)
 }
 
-output "key_pair_name" {
-  description = "Name of the created key pair"
-  value       = aws_key_pair.main.key_name
+variable "all_subnet_ids" {
+  description = "All subnet IDs from infrastructure module"
+  type        = list(string)
 }
 
-output "private_key_pem" {
-  description = "Private key in PEM format (sensitive)"
-  value       = tls_private_key.main.private_key_pem
-  sensitive   = true
+variable "app_security_group_id" {
+  description = "Application security group ID from infrastructure module"
+  type        = string
+}
+
+variable "instance_role_name" {
+  description = "IAM instance role name from infrastructure module"
+  type        = string
+}
+
+variable "common_tags" {
+  description = "Common tags from infrastructure module"
+  type        = map(string)
+}
+
+variable "environment" {
+  description = "Environment name from infrastructure module"
+  type        = string
+}
+
+variable "project_name" {
+  description = "Project name from infrastructure module"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "AWS region from infrastructure module"
+  type        = string
+}
+
+# Compute-specific variables
+variable "instance_types" {
+  description = "Instance types for different flavors"
+  type        = map(string)
+  default = {
+    flavor1 = "t3.micro"
+    flavor2 = "t3.small"
+  }
+}
+
+variable "root_volume_size" {
+  description = "Root volume size in GB"
+  type        = number
+  default     = 20
+}
+
+variable "assign_elastic_ips" {
+  description = "Whether to assign Elastic IPs to instances"
+  type        = bool
+  default     = true
+}
+
+variable "enable_monitoring" {
+  description = "Enable detailed monitoring for instances"
+  type        = bool
+  default     = false
+}
+
+variable "cpu_alarm_threshold" {
+  description = "CPU utilization threshold for CloudWatch alarms"
+  type        = number
+  default     = 80
 }
