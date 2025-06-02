@@ -48,9 +48,7 @@ output "instance_connection_info" {
   value = {
     for idx, id in module.ec2_instances.instance_ids : 
       "${var.project_name}-${var.environment}-instance-${idx + 1}" => {
-        ssh_command = data.aws_instance.instances[id].public_ip != "" ? 
-          "ssh -i <private_key_file> ec2-user@${data.aws_instance.instances[id].public_ip}" : 
-          "Instance has no public IP - use SSM or bastion host"
+        ssh_command = data.aws_instance.instances[id].public_ip != "" ? "ssh -i <private_key_file> ec2-user@${data.aws_instance.instances[id].public_ip}" : "Instance has no public IP - use SSM or bastion host"
       }
   }
 }
