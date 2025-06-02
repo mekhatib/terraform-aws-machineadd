@@ -1,57 +1,18 @@
-# Infrastructure outputs as inputs
-variable "vpc_id" {
-  description = "VPC ID from infrastructure module"
+# Remote State Configuration
+variable "tfc_organization" {
+  description = "Terraform Cloud organization name"
   type        = string
 }
 
-variable "vpc_cidr_block" {
-  description = "VPC CIDR block from infrastructure module"
-  type        = string
-}
-
-variable "private_subnet_ids" {
-  description = "Private subnet IDs from infrastructure module"
-  type        = list(string)
-}
-
-variable "public_subnet_ids" {
-  description = "Public subnet IDs from infrastructure module"
-  type        = list(string)
-}
-
-variable "all_subnet_ids" {
-  description = "All subnet IDs from infrastructure module"
-  type        = list(string)
-}
-
-variable "app_security_group_id" {
-  description = "Application security group ID from infrastructure module"
-  type        = string
-}
-
-variable "instance_role_name" {
-  description = "IAM instance role name from infrastructure module"
-  type        = string
-}
-
-variable "common_tags" {
-  description = "Common tags from infrastructure module"
-  type        = map(string)
-}
-
-variable "environment" {
-  description = "Environment name from infrastructure module"
-  type        = string
-}
-
-variable "project_name" {
-  description = "Project name from infrastructure module"
+variable "infrastructure_workspace_name" {
+  description = "Name of the infrastructure workspace in Terraform Cloud"
   type        = string
 }
 
 variable "aws_region" {
-  description = "AWS region from infrastructure module"
+  description = "AWS region"
   type        = string
+  default     = "us-east-1"
 }
 
 # Compute-specific variables
