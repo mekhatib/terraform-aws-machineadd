@@ -116,7 +116,7 @@ module "ec2_instances" {
   enable_monitoring        = var.enable_monitoring
   cpu_alarm_threshold      = var.cpu_alarm_threshold
   alarm_actions           = []
-  create_instance_profiles = false
+  create_instance_profiles = true
   additional_volumes      = []
   kms_key_id              = null
   
